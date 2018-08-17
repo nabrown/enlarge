@@ -1,8 +1,23 @@
-/*! fg-enlarge - v0.3.1 - 2018-08-16
+/*! fg-enlarge - v0.3.1 - 2018-08-17
 * Copyright (c) 2018 Scott Jehl, Filament Group, Inc.; Licensed MIT */
 ;(function( w ){
 
-	var defaultOptions = {
+	var msGesture = window.navigator && window.navigator.msPointerEnabled && window.MSGesture;
+  var hasTouch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch);
+  var defaultOptions, touchDefaultOptions;
+
+	touchDefaultOptions = {
+		hoverZoomWithoutClick: false,
+		delay: 200,
+		flyout: {
+			width: 300,
+			height: 300
+		},
+		placement: "flyoutloupe",
+		magnification: 5
+	}
+
+	defaultOptions = {
 		hoverZoomWithoutClick: true,
 		delay: 300,
 		flyout: {
@@ -11,7 +26,8 @@
 		},
 		placement: "flyoutright",
 		magnification: 3
-	};
+	}	
+
 
 	var enlarge = function(){
 		var $ = w.jQuery;
@@ -25,8 +41,12 @@
 
 			if( typeof options !== "string" ) {
 				// extend with passed options
-				// o = $.extend( o, options );
-				o = $.extend({}, defaultOptions, options)
+				if ( hasTouch ){
+					o = $.extend({}, touchDefaultOptions, options.touchOptions)
+				}else{
+					o = $.extend({}, defaultOptions, options)
+				}
+
 				$(this).data("options", o);
 
 			}
