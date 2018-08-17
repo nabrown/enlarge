@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Enlarge Examples</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../../src/enlarge.css" />
+	</head>
+	<body>
+
+<section>
+		<div class="enlarge_pane_contain">
+			<div class="enlarge_pane">
+				<div class="enlarge">
+					<div class="enlarge_contain">
+						<img src="../imgs-2/image.jpg" srcset="../imgs-2/image.jpg 500w, ../imgs-2/image@2x.jpg 1000w, ../imgs-2/image@3x.jpg 1500w" sizes="500px" alt="" id="test-img">
+					</div>
+					<a href="../imgs-2/image.jpg" class="enlarge_btn" title="Toggle Zoom">Toggle Zoom</a>
+				</div>
+			</div>
+		</div>
+</section>
+		<script
+		  src="https://code.jquery.com/jquery-2.2.4.min.js"
+		  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+		  crossorigin="anonymous"></script>
+
+		<script>
+	  $(".enlarge").data("options", {
+	    hoverZoomWithoutClick: true,
+	    delay: 300,
+	    flyout: {
+	      width: 500,
+	      height: 750
+	    },
+	    placement: "flyoutright",
+	    magnification: 5,
+	    touchOptions: {
+	    	placement: "inline",
+	    	magnification: 5
+	    }
+	  });
+		</script>
+
+		<script src="../../dist/enlarge.js"></script>
+		<script src="../init.js"></script>
+	</body>
+</html>
