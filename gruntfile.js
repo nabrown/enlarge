@@ -13,6 +13,7 @@
 				'<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
 				'* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
 				' Licensed <%= pkg.license %> */\n',
+
 			// Task configuration.
 			clean: {
 				files: ['dist']
@@ -22,10 +23,6 @@
 					banner: '<%= banner %>',
 					stripBanners: true
 				},
-				/*lib: {
-					src: 'node_modules/jquery/dist/jquery.js',
-					dest: 'libs/jquery/jquery.js'
-				},*/
 				dist: {
 					src: ['src/enlarge.js', 'src/enlarge.init.js'],
 					dest: 'dist/enlarge.js'
