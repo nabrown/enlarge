@@ -14,8 +14,8 @@
 		hoverZoomWithoutClick: false,
 		delay: 200,
 		flyout: {
-			width: 300,
-			height: 300
+			width: '300px',
+			height: '300px'
 		},
 		placement: "flyoutloupe",
 		magnification: 5
@@ -23,10 +23,10 @@
 
 	defaultOptions = {
 		hoverZoomWithoutClick: true,
-		delay: 1000,
+		delay: 500,
 		flyout: {
-			width: 300,
-			height: 300
+			width: '300px',
+			height: '300px'
 		},
 		placement: "flyoutright",
 		magnification: 3
@@ -61,11 +61,14 @@
 				var $element = $(this);
 
 				var self = this;
+
+				// does browser support srcset and sizes?
 				var testimg = w.document.createElement( "img" );
 				var srcsetSupported = "srcset" in testimg;
 				var srcsetSizesSupported = srcsetSupported && "sizes" in testimg;
-				var $anchor = $( this ).find( "a" );
 
+				// based on progressively enhancing a simple link to larger image
+				var $anchor = $( this ).find( "a" );
 				if( !$anchor.length ){
 					throw new Error(pluginName + ": requires an anchor element with `href` for the enlarged image source");
 				}
@@ -83,6 +86,7 @@
 				var $contain = $( targetImg ).closest( ".enlarge_contain" );
 				var $zoomContain = $contain;
 				var $parentPane = $( targetImg ).closest( ".enlarge_pane" ) || $element;
+				var calcFlyoutWidth, calcFlyoutHeight;
 
 				var $zoomParent = $(this).data("zoomParent") || $parentPane;
 				$(this).data("zoomParent", $zoomParent);
@@ -144,19 +148,25 @@
 
 					// set flyout width and height
 					$flyout.css({
-						"width": o.flyout.width + "px",
-						"height": o.flyout.height + "px",
+						"width": o.flyout.width,
+						"height": o.flyout.height,
 						top: "",
 						left: "",
 						"margin-left": "",
 						"margin-top": ""
 					});
 
+					console.log($flyout.width());
+					console.log($flyout.height());
+
+					calcFlyoutWidth = $flyout.width();
+					calcFlyoutHeight = $flyout.height();
+
 					// set negative left or right value to match width
 					var flyoutSide = o.placement.match( /left|right/ );
 
 					if( flyoutSide ){
-						$flyout.css( flyoutSide[0], (-o.flyout.width - 10) + "px" );
+						$flyout.css( flyoutSide[0], (-calcFlyoutWidth - 10) + "px" );
 						$flyout.css( "top", "0" );
 					}
 					// if loupe mode, center offset
@@ -165,8 +175,8 @@
 					if( loupe ) {
 						// loupe
 						$flyout.css({
-							"margin-left": ( -o.flyout.width / 2 ) + "px",
-							"margin-top": ( -o.flyout.height / 2 ) + "px"
+							"margin-left": ( -calcFlyoutWidth / 2 ) + "px",
+							"margin-top": ( -calcFlyoutHeight / 2 ) + "px"
 						});
 					}
 
@@ -418,8 +428,8 @@
 
 						if( o.placement.match( /loupe/ ) ) {
 							// offset the loupe a little differently for touch so that it's not directly beneath a finger
-							var mLeft = ( oe.touches ? -o.flyout.width / 1.3 : -o.flyout.width / 2 ) + "px";
-							var mTop = ( oe.touches ? -o.flyout.height / 1.3 : -o.flyout.height / 2 ) + "px";
+							var mLeft = ( oe.touches ? -calcFlyoutWidth / 1.3 : -calcFlyoutWidth / 2 ) + "px";
+							var mTop = ( oe.touches ? -calcFlyoutHeight / 1.3 : -calcFlyoutHeight / 2 ) + "px";
 							requestAnimationFrame(function(){
 								$flyout.css( {
 									top: y + "px",
