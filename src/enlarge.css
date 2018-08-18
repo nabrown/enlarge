@@ -9,7 +9,7 @@
 	position: relative;
 }
 .enlarge_pane_contain{
-	max-width: 600px;
+	max-width: 500px;
 	margin: 20px;
 }
 .enlarge_btn {
@@ -22,6 +22,7 @@
 	color: #000;
 	text-decoration: none;
 	padding: .5em;
+	display: none;
 }
 .enlarge_btn:hover,
 .enlarge_btn:focus {
@@ -64,28 +65,41 @@
 	overflow: scroll;
 }
 .enlarge_loader {
-	top: 0;
+	position: absolute;
+	top: 40%;
 	left: 0;
 	width: 100%;
-	height: 5px;
-	position: absolute;
+	padding: 1em;
 	z-index: 30;
-	background: #eee;
-	opacity: 0;
-	display: none;
+	background: rgba(255,255,255,.7);
+	text-align: center;
+	animation-name: fadeIn;
+	animation-duration: 1s;
+  	animation-fill-mode: both;
 }
-.enlarge-delay .enlarge_loader {
-	/* opacity: .4; disable loader for now */
+.fadeOut{
+	animation-name: fadeOut;
+	animation-duration: 500ms;
+  	animation-fill-mode: both;
 }
-.enlarge_loader * {
-	width: 0;
-	display: block;
-	height: 5px;
-	background: #4fa4c0;
-	-webkit-transition: width .6s linear;
-	transition: width .6s linear;
-}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
 
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
 .enlarge_img-loading {
 	position: absolute;
 	left: -9999px;
