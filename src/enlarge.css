@@ -75,12 +75,12 @@
 	text-align: center;
 	animation-name: fadeIn;
 	animation-duration: 1s;
-  	animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 .fadeOut{
 	animation-name: fadeOut;
 	animation-duration: 500ms;
-  	animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 @keyframes fadeIn {
   from {
