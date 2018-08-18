@@ -54,6 +54,7 @@
 	height: 100%;
 }
 .enlarge_contain img {
+	display: block;
 	width: 100%;
 	-webkit-touch-callout: none; /* image share menus get in the way of the interaction */
 }
@@ -112,12 +113,14 @@
 	transition: transform .3s;
 	position: absolute;
 	z-index: 9999;
+	outline: 1px dashed #ababab;
 }
 .enlarge_flyout-flyoutloupe {
 	border-radius: 100%;
 	border: 5px solid #fff;
 	box-shadow: 0 0 5px #333;
-	  pointer-events: none;
+	pointer-events: none;
+	outline: none;
 }
 .enlarge_flyout-flyouttopleft,
 .enlarge_flyout-flyouttopright {
