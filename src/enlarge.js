@@ -7,10 +7,11 @@
 ;(function( w ){
 
 	var msGesture = window.navigator && window.navigator.msPointerEnabled && window.MSGesture;
-  var hasTouch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch);
-  var defaultOptions, touchDefaultOptions;
+	var hasTouch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch);
+	var defaultOptions, touchDefaultOptions;
 
 	touchDefaultOptions = {
+		loading: "fetching detail&hellip;",		
 		hoverZoomWithoutClick: false,
 		delay: 200,
 		flyout: {
@@ -22,8 +23,9 @@
 	}
 
 	defaultOptions = {
+		loading: "fetching detail&hellip;",
 		hoverZoomWithoutClick: true,
-		delay: 500,
+		delay: 200,
 		flyout: {
 			width: '300px',
 			height: '300px'
@@ -216,7 +218,7 @@
 				// loader div holds a new image while its new source is loading
 				// we insert this into the dom so that srcset/sizes can calculate a best source
 				function addLoader(){
-					$contain.append( '<div class="enlarge_loader"><div>Loading detail...</div></div>' );
+					$contain.append( '<div class="enlarge_loader"><div>' + o.loading + '</div></div>' );
 					loaderDisplayed = true;
 				}
 
@@ -372,7 +374,7 @@
 
 				// mouseenter or touchstart handler for dragging image
 				function startTrackingDelay(e){
-					addLoader();
+					if(!loaderDisplayed) { addLoader(); }
 					if( e.type === "touchstart" ){
 						touchStarted = true;
 					}
