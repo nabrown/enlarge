@@ -82,7 +82,7 @@
 				var $contain = $( targetImg ).closest( ".enlarge_contain" );
 				var $zoomContain = $contain;
 				var $parentPane = $( targetImg ).closest( ".enlarge_pane" ) || $element;
-				var calcFlyoutWidth, calcFlyoutHeight;
+				var calcFlyoutWidth, calcFlyoutHeight, loaderDisplayed;
 
 				var $zoomParent = $(this).data("zoomParent") || $parentPane;
 				$(this).data("zoomParent", $zoomParent);
@@ -152,9 +152,6 @@
 						"margin-top": ""
 					});
 
-					console.log($flyout.width());
-					console.log($flyout.height());
-
 					calcFlyoutWidth = $flyout.width();
 					calcFlyoutHeight = $flyout.height();
 
@@ -216,14 +213,17 @@
 				// we insert this into the dom so that srcset/sizes can calculate a best source
 				function addLoader(){
 					$contain.append( '<div class="enlarge_loader"><div>Loading detail...</div></div>' );
+					loaderDisplayed = true;
 				}
 
 				function removeLoader(){
 					var $loader = $contain.find('.enlarge_loader');
-					$loader.on('animationend', function(){
-						$loader.remove()
-					});
-					$loader.addClass('fadeOut')
+					if($loader.length){
+						$loader.on('animationend', function(){
+							$loader.remove()
+						});
+						$loader.addClass('fadeOut')
+					}
 				}
 
 				// zoom state toggle boolean
@@ -271,7 +271,6 @@
 						} else if (srcset) {
 							zoomimg.srcset = srcset;
 						}
-						console.log('zoom image insterted')
 						$( zoomimg ).insertBefore( targetImg );
 					}
 				}
