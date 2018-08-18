@@ -1,4 +1,4 @@
-/*! fg-enlarge - v0.3.1 - 2018-08-17
+/*! fg-enlarge - v0.3.1 - 2018-08-18
 * Copyright (c) 2018 Scott Jehl, Filament Group, Inc.; Licensed MIT */
 ;(function( w ){
 
@@ -19,7 +19,7 @@
 
 	defaultOptions = {
 		hoverZoomWithoutClick: true,
-		delay: 300,
+		delay: 1000,
 		flyout: {
 			width: 300,
 			height: 300
@@ -205,7 +205,15 @@
 				// loader div holds a new image while its new source is loading
 				// we insert this into the dom so that srcset/sizes can calculate a best source
 				function addLoader(){
-					$contain.append( '<i class="enlarge_loader"><i></i></i>' );
+					$contain.append( '<div class="enlarge_loader"><div>Loading detail...</div></div>' );
+				}
+
+				function removeLoader(){
+					var $loader = $contain.find('.enlarge_loader');
+					$loader.on('animationend', function(){
+						$loader.remove()
+					});
+					$loader.addClass('fadeOut')
 				}
 
 				// zoom state toggle boolean
@@ -241,6 +249,7 @@
 								targetImg.src = imgZoomSrc;
 							}
 							$( zoomimg ).remove();
+							removeLoader();
 
 							after();
 						};
@@ -252,7 +261,7 @@
 						} else if (srcset) {
 							zoomimg.srcset = srcset;
 						}
-
+						console.log('zoom image insterted')
 						$( zoomimg ).insertBefore( targetImg );
 					}
 				}
@@ -350,6 +359,7 @@
 
 				// mouseenter or touchstart handler for dragging image
 				function startTrackingDelay(e){
+					addLoader();
 					if( e.type === "touchstart" ){
 						touchStarted = true;
 					}
@@ -435,8 +445,6 @@
 				var $flyout = $( '<div class="enlarge_flyout"></div>' ).append( $contain.clone() );
 				$flyout.insertAfter( $parentPane );
 
-				// add loader div
-				addLoader();
 				updatePlacement();
 				positionFlyout();
 
